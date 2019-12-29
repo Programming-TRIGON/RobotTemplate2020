@@ -15,8 +15,8 @@ public class RobotA extends RobotConstants {
         drivetrainConstants.WHEEL_BASE_WIDTH = 0;
         drivetrainConstants.ROBOT_LENGTH = 0;
         drivetrainConstants.ROBOT_WIDTH = 0;
-        drivetrainConstants.LEFT_ENCODER_METER_PER_TICKS = 0;
-        drivetrainConstants.RIGHT_ENCODER_METER_PER_TICKS = 0;        
+        drivetrainConstants.LEFT_ENCODER_TICKS_PER_METER = 1;
+        drivetrainConstants.RIGHT_ENCODER_TICKS_PER_METER = 1;        
         
         /* Robot Map */
         
