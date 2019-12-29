@@ -9,6 +9,7 @@ import frc.robot.constants.RobotConstants;
 import frc.robot.constants.field_constants.HomeField;
 import frc.robot.constants.robots.RobotA;
 import frc.robot.vision.Limelight;
+import frc.robot.subsystems.DrivetrainInterface;
 
 public class Robot extends TimedRobot {
   private Command autoCommand;
@@ -18,11 +19,13 @@ public class Robot extends TimedRobot {
   public static RobotConstants robotConstants;
   public static FieldConstants fieldConstants;
   public static Limelight limelight;
+  public static DrivetrainInterface drivetrain; // TODO: Change interface to subsystem
 
   @Override
   public void robotInit() {
     robotConstants = new RobotA();
     fieldConstants = new HomeField();
+
     dashboardDataContainer = new DashboardDataContainer();
     limelight = new Limelight();
     autoChooser = new SendableChooser<>();
