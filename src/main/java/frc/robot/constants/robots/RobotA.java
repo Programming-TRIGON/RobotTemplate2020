@@ -26,6 +26,8 @@ public class RobotA extends RobotConstants {
         visionConstants.LIMELIGHT_OFFSET_Y = 0;
 
         pidConstants.exampleSettings = new PIDSettings(0,0,0,0);
+        pidConstants.visionDistanceSettings = new PIDSettings(0,0,0,0,0);
+        pidConstants.visionRotationSettings = new PIDSettings(0,0,0,0,0);
         /* Robot Map */
 
     }

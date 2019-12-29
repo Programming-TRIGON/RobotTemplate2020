@@ -21,6 +21,8 @@ public abstract class RobotConstants extends RobotMap {
     }
     public static class PIDConstants {
         public PIDSettings exampleSettings;
+        public PIDSettings visionRotationSettings;
+        public PIDSettings visionDistanceSettings;
     }
 
     public static class VisionConstants {
