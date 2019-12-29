@@ -104,13 +104,14 @@ public class Limelight {
    */
   public void setCamMode(int camMode) {
     this.camMode.setNumber(camMode);
+    NetworkTableInstance.getDefault().flush();
   }
 
   /**
    * @param camMode the mode to be changed to.
    */
   public void setCamMode(CamMode camMode) {
-    this.camMode.setNumber(camMode.getValue());
+    setCamMode(camMode.getValue());
   }
 
   /**
@@ -165,7 +166,7 @@ public class Limelight {
    * @param ledMode the mode to be changed to.
    */
   public void setLedMode(LedMode ledMode) {
-    System.out.println(this.ledMode.setNumber(ledMode.getValue()));
+    setLedMode(ledMode.getValue());
   }
 
   /**
@@ -173,6 +174,7 @@ public class Limelight {
    */
   public void setLedMode(int ledMode) {
     this.ledMode.setNumber(ledMode);
+    NetworkTableInstance.getDefault().flush();
   }
 
 
