@@ -85,4 +85,11 @@ public class FollowTarget extends CommandBase {
     return ((Timer.getFPGATimestamp() - lastTimeSeenTarget) > robotConstants.visionConstants.TARGET_NOT_FOUND_WAIT_TIME)
             || (rotationPIDController.atSetpoint() && (distancePIDController == null || distancePIDController.atSetpoint()));
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    output.accept(0.0,0.0);
+    limelight.setLedMode(LedMode.off);
+    limelight.setCamMode(CamMode.driver);
+  }
 }
