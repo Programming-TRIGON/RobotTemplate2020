@@ -54,13 +54,16 @@ public class CalibrateLimelightDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     return currentDistance > deltaDistance * AMOUNT_OF_LOGS;
-
   }
 
   @Override
   public void end(boolean interrupted) {
     logger.close();
+  }
 
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
   }
 }
 
