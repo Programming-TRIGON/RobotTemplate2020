@@ -30,6 +30,7 @@ public abstract class RobotConstants extends RobotMap {
         public double DISTANCE_CALCULATION_B_COEFFICIENT;
         public double LIMELIGHT_OFFSET_X;
         public double LIMELIGHT_OFFSET_Y;
+        public double TARGET_NOT_FOUND_WAIT_TIME;
     }
 
     // More static class here!
