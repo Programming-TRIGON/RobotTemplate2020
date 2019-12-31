@@ -36,12 +36,6 @@ public class Limelight {
     this(DEFAULT_TABLE_KEY);
   }
 
-  public void startVision(Target target) {
-    setPipeline(target);
-    setCamMode(CamMode.vision);
-    setLedMode(LedMode.on);
-  }
-
   /**
    * @return Whether the limelight has any valid targets (0 or 1)
    */
@@ -185,6 +179,12 @@ public class Limelight {
    */
   public void setSnapshotState(boolean isTakingSnapshots) {
     snapshot.setNumber(isTakingSnapshots ? 1 : 0);
+  }
+
+  public void startVision(Target target) {
+    setPipeline(target);
+    setCamMode(CamMode.vision);
+    setLedMode(LedMode.on);
   }
 
   /**
