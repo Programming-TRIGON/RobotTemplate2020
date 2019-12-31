@@ -44,7 +44,7 @@ public class Logger {
 
     /**
      * @param values The values that the logger will log. Each value is logged in it's respective column.
-     *               Make sure to enter the values the same order column names have been entered in the constructor.
+     *               Make sure to enter the values in the same order column names have been entered in the constructor.
      */
     public void log(double ... values) {
         String[] array = new String[values.length];
