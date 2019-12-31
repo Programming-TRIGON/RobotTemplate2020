@@ -5,12 +5,9 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.enums.Target;
 import frc.robot.utils.PIDSettings;
-import frc.robot.vision.Limelight.CamMode;
-import frc.robot.vision.Limelight.LedMode;
-
 import java.util.function.BiConsumer;
-import java.util.function.DoubleConsumer;
 
 import static frc.robot.Robot.limelight;
 import static frc.robot.Robot.robotConstants;
@@ -44,14 +41,12 @@ public class FollowTarget extends CommandBase {
 
   @Override
   public void initialize() {
-      distancePIDController.reset();
+    distancePIDController.reset();
     rotationPIDController.reset();
 
     lastTimeSeenTarget = Timer.getFPGATimestamp();
     // Configure the limelight to start computing.
-    limelight.setPipeline(target);
-    limelight.setCamMode(CamMode.vision);
-    limelight.setLedMode(LedMode.on);
+    limelight.startVision(target);
   }
 
   @Override
@@ -75,8 +70,7 @@ public class FollowTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     output.accept(0.0, 0.0);
-    limelight.setLedMode(LedMode.off);
-    limelight.setCamMode(CamMode.driver);
+    limelight.stopVision();
   }
 
   public void enableTuning() {

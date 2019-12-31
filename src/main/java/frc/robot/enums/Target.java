@@ -1,4 +1,4 @@
-package frc.robot.vision;
+package frc.robot.enums;
 
 /**
  * This class represent a potential targets that the robot
@@ -14,11 +14,9 @@ public enum Target {
 
   Target(int index) {
     this.index = index;
-
   }
 
   public int getIndex() {
     return index;
   }
-
 }

@@ -28,6 +28,7 @@ public abstract class RobotConstants extends RobotMap {
     public static class VisionConstants {
         public double DISTANCE_CALCULATION_A_COEFFICIENT;
         public double DISTANCE_CALCULATION_B_COEFFICIENT;
+        // Offsets are measured from the robot's center of rotation to the limelight position.
         public double LIMELIGHT_OFFSET_X;
         public double LIMELIGHT_OFFSET_Y;
         public double TARGET_NOT_FOUND_WAIT_TIME;

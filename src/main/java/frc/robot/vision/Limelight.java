@@ -4,12 +4,16 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import frc.robot.enums.CamMode;
+import frc.robot.enums.LedMode;
+import frc.robot.enums.Target;
+
 import static frc.robot.Robot.robotConstants;
 
 public class Limelight {
 
   public static final String DEFAULT_TABLE_KEY = "limelight";
-  private final NetworkTableEntry tv, tx, ty, ta, ts, ledMode, camMode, pipeline;
+  private final NetworkTableEntry tv, tx, ty, ta, ts, ledMode, camMode, pipeline, snapshot;
 
   /**
    * @param tableKey the key of the limelight - if it was changed.
@@ -25,11 +29,17 @@ public class Limelight {
     ledMode = limelightTable.getEntry("ledMode");
     camMode = limelightTable.getEntry("camMode");
     pipeline = limelightTable.getEntry("pipeline");
-
+    snapshot = limelightTable.getEntry("snapshot");
   }
 
   public Limelight() {
     this(DEFAULT_TABLE_KEY);
+  }
+
+  public void startVision(Target target) {
+    setPipeline(target);
+    setCamMode(CamMode.vision);
+    setLedMode(LedMode.on);
   }
 
   /**
@@ -73,7 +83,7 @@ public class Limelight {
   //TODO: set real function
   public double getDistanceFromLimelight() {
     double x = getTy();
-    return robotConstants.visionConstants.DISTANCE_CALCULATION_A_COEFFICIENT * x * x +
+    return robotConstants.visionConstants.DISTANCE_CALCULATION_A_COEFFICIENT * Math.pow(x, 2) +
             robotConstants.visionConstants.DISTANCE_CALCULATION_B_COEFFICIENT * x;
   }
 
@@ -87,9 +97,9 @@ public class Limelight {
   /**
    * @return the angle from the middle of the robot to the target
    */
-  public double getAngle(){
+  public double getAngle() {
     Vector2d vector = calculateVector();
-    return Math.atan(vector.y/vector.x);
+    return Math.atan(vector.y / vector.x);
   }
 
   /**
@@ -114,44 +124,11 @@ public class Limelight {
     setCamMode(camMode.getValue());
   }
 
-  /**
-   * This enum has two states - send images to driver and calculate the vision.
-   */
-  public enum CamMode {
-    vision(0), driver(1);
-
-    private final int value;
-
-    CamMode(int value) {
-      this.value = value;
-    }
-
-    public int getValue() {
-      return value;
-    }
-
-  }
-
-  public enum LedMode {
-    defaultPipeline(0), off(1), blink(2), on(3);
-
-    private final int value;
-
-    LedMode(int value) {
-      this.value = value;
-    }
-
-    public int getValue() {
-      return value;
-    }
-  }
-
   public void toggleLedMode() {
     if (getLedMode().equals(LedMode.off))
       setLedMode(LedMode.on);
     else
       setLedMode(LedMode.off);
-
   }
 
   /**
@@ -181,9 +158,8 @@ public class Limelight {
   /**
    * @return the current target in the NetworkTable.
    */
-  public Target getTarget() {
-    int index = (int) pipeline.getDouble(0);
-    return Target.values()[index];
+  public int getPipeline() {
+    return (int) pipeline.getDouble(0);
   }
 
   /**
@@ -191,6 +167,7 @@ public class Limelight {
    */
   public void setPipeline(int pipeline) {
     this.pipeline.setNumber(pipeline);
+    NetworkTableInstance.getDefault().flush();
   }
 
   /**
@@ -201,15 +178,33 @@ public class Limelight {
   }
 
   /**
+   * @param isTakingSnapshots If set to true, the limelight will start taking snapshots.
+   *                          this is good for calibrating the limelight when the target isn't available,
+   *                          for example during a competition.
+   *                          If set to false, stops taking snapshots.
+   */
+  public void setSnapshotState(boolean isTakingSnapshots) {
+    snapshot.setNumber(isTakingSnapshots ? 1 : 0);
+  }
+
+  /**
+   * Stops the vision calculation, turns off led and change the camera to driver mode.
+   */
+  public void stopVision(){
+    setCamMode(CamMode.driver);
+    setLedMode(LedMode.off);
+  }
+
+  /**
    * @return the vector between the middle of the robot and and the target.
    */
   private Vector2d calculateVector() {
     //This is the offset vector.
-    Vector2d MiddleToLimelight = new Vector2d(-robotConstants.visionConstants.LIMELIGHT_OFFSET_X, -robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
+    Vector2d middleToLimelight = new Vector2d(-robotConstants.visionConstants.LIMELIGHT_OFFSET_X, -robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
     //This is the the vector from the limelight to the target.
     Vector2d limelightToTarget = new Vector2d(0, getDistanceFromLimelight());
     limelightToTarget.rotate(getTx());
     // The offset is subtracted from the limelightToTarget vector in order to get the final vector.
-    return new Vector2d(MiddleToLimelight.x + limelightToTarget.x, MiddleToLimelight.y + limelightToTarget.y);
+    return new Vector2d(middleToLimelight.x + limelightToTarget.x, middleToLimelight.y + limelightToTarget.y);
   }
 }
