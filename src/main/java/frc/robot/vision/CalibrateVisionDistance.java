@@ -8,7 +8,7 @@ import frc.robot.utils.Logger;
 import java.util.function.Supplier;
 
 
-public class CalibrateLimelightDistance extends CommandBase {
+public class CalibrateVisionDistance extends CommandBase {
   private static final int DEFAULT_DELTA_DISTANCE = 30;
   private static final int AMOUNT_OF_LOGS = 8;
   private double currentDistance = 0;
@@ -20,7 +20,7 @@ public class CalibrateLimelightDistance extends CommandBase {
   /**
    * @param logButton whenever the supplier toggles to true - log the values.
    */
-  public CalibrateLimelightDistance(Supplier<Boolean> logButton) {
+  public CalibrateVisionDistance(Supplier<Boolean> logButton) {
     this(logButton, DEFAULT_DELTA_DISTANCE);
   }
 
@@ -28,7 +28,7 @@ public class CalibrateLimelightDistance extends CommandBase {
    * @param logButton whenever the supplier toggles to true - log the values.
    * @param deltaDistance the distance between each log.
    */
-  public CalibrateLimelightDistance(Supplier<Boolean> logButton, double deltaDistance) {
+  public CalibrateVisionDistance(Supplier<Boolean> logButton, double deltaDistance) {
     this.logButton = logButton;
     this.deltaDistance = deltaDistance;
   }
