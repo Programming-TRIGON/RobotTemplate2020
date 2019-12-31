@@ -77,5 +77,4 @@ public class Logger {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return timestamp.toString();
     }
-
 }
