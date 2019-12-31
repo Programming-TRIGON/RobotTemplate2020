@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
 
 /**
  * Must have functions (interface) in Drivetrain subsystem
  */
-public interface DrivetrainInterface {
+public interface DrivetrainInterface extends Subsystem {
     // Drive functions
     void arcadeDrive(double x, double y);
     void curvatureDrive(double x, double y, boolean quickTurn);

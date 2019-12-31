@@ -7,9 +7,10 @@ import frc.robot.utils.PIDSettings;
  */
 public abstract class RobotConstants extends RobotMap {
     public DrivetrainConstants drivetrainConstants = new DrivetrainConstants(); 
+    public VisionConstants visionConstants = new VisionConstants();
     public PIDConstants pidConstants = new PIDConstants();
 
-    // Example: 
+    // Example:
     public static class DrivetrainConstants {
         public double WHEEL_DIAMETER; 
         public double WHEEL_BASE_WIDTH;
@@ -20,8 +21,19 @@ public abstract class RobotConstants extends RobotMap {
     }
     public static class PIDConstants {
         public PIDSettings exampleSettings;
+        public PIDSettings visionRotationSettings;
+        public PIDSettings visionDistanceSettings;
     }
 
-    // More static class here! 
+    public static class VisionConstants {
+        public double DISTANCE_CALCULATION_A_COEFFICIENT;
+        public double DISTANCE_CALCULATION_B_COEFFICIENT;
+        // Offsets are measured from the robot's center of rotation to the limelight position.
+        public double LIMELIGHT_OFFSET_X;
+        public double LIMELIGHT_OFFSET_Y;
+        public double TARGET_NOT_FOUND_WAIT_TIME;
+    }
+
+    // More static class here!
 
 }
