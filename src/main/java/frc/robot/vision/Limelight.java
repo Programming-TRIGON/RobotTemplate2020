@@ -13,7 +13,7 @@ import static frc.robot.Robot.robotConstants;
 public class Limelight {
 
   public static final String DEFAULT_TABLE_KEY = "limelight";
-  private final NetworkTableEntry tv, tx, ty, ta, ts, ledMode, camMode, pipeline, snapshot;
+  private final NetworkTableEntry tv, tx, ty, ta, ts, ledMode, camMode, pipeline, snapshot, height;
 
   /**
    * @param tableKey the key of the limelight - if it was changed.
@@ -30,6 +30,7 @@ public class Limelight {
     camMode = limelightTable.getEntry("camMode");
     pipeline = limelightTable.getEntry("pipeline");
     snapshot = limelightTable.getEntry("snapshot");
+    height = limelightTable.getEntry("tx0");
   }
 
   public Limelight() {
@@ -71,12 +72,15 @@ public class Limelight {
     return ts.getDouble(0);
   }
 
+  public double getTargetHeight(){
+    return height.getDouble(0);
+  }
   /**
    * @return The distance between the the target and the limelight
    */
   //TODO: set real function
   public double getDistanceFromLimelight() {
-    double x = getTy();
+    double x = getTargetHeight();
     return robotConstants.visionConstants.DISTANCE_CALCULATION_A_COEFFICIENT * Math.pow(x, 2) +
             robotConstants.visionConstants.DISTANCE_CALCULATION_B_COEFFICIENT * x;
   }
