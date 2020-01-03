@@ -4,7 +4,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import frc.robot.Robot;
 import frc.robot.enums.CamMode;
 import frc.robot.enums.LedMode;
 import frc.robot.enums.Target;
@@ -191,7 +190,7 @@ public class Limelight {
   /**
    * Stops the vision calculation, turns off led and change the camera to driver mode.
    */
-  public void stopVision(){
+  public void stopVision() {
     setCamMode(CamMode.driver);
     setLedMode(LedMode.off);
   }
@@ -201,21 +200,10 @@ public class Limelight {
    */
   private Vector2d calculateVector() {
     //This is the offset vector.
-    Vector2d middleToLimelight = new Vector2d(-robotConstants.visionConstants.LIMELIGHT_OFFSET_X, -robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
     //This is the the vector from the limelight to the target.
-    Vector2d limelightToTarget = new Vector2d(0, getDistanceFromLimelight());
+    Vector2d limelightToTarget = new Vector2d(getDistanceFromLimelight(), 0);
     limelightToTarget.rotate(getTx());
     // The offset is subtracted from the limelightToTarget vector in order to get the final vector.
-    return new Vector2d(middleToLimelight.x + limelightToTarget.x, middleToLimelight.y + limelightToTarget.y);
-  }
-  public static void main(String[] args){
-    //This is the offset vector.
-    Vector2d middleToLimelight = new Vector2d(-0, -0);
-    //This is the the vector from the limelight to the target.
-    Vector2d limelightToTarget = new Vector2d(10, 0);
-    limelightToTarget.rotate(46);
-    // The offset is subtracted from the limelightToTarget vector in order to get the final vector.
-    Vector2d v = new Vector2d(middleToLimelight.x + limelightToTarget.x, middleToLimelight.y + limelightToTarget.y);
-    System.out.println("magnitude: " + limelightToTarget.magnitude() + ", angle: " + Math.toDegrees(Math.atan(limelightToTarget.y/limelightToTarget.x)));
+    return new Vector2d(limelightToTarget.x - robotConstants.visionConstants.LIMELIGHT_OFFSET_X, limelightToTarget.y - robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
   }
 }
