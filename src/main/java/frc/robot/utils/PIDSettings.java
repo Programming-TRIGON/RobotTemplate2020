@@ -5,12 +5,9 @@ package frc.robot.utils;
  */
 public class PIDSettings {
 
-  private double KS;
   private double KP;
   private double KI;
   private double KD;
-  private double KV;
-  private double KA;
   private double tolerance;
   private double deltaTolerance;
 
@@ -30,21 +27,6 @@ public class PIDSettings {
     this.tolerance = tolerance;
     this.deltaTolerance = deltaTolerance;
 
-  }
-
-  public PIDSettings(double KP, double KV, double KA, double KS) {
-    this.KP = KP;
-    this.KV = KV;
-    this.KA = KA;
-    this.KS = KS;
-  }
-
-  public double getTolerance() {
-    return tolerance;
-  }
-
-  public void setTolerance(double tolerance) {
-    this.tolerance = tolerance;
   }
 
   public double getKP() {
@@ -71,20 +53,12 @@ public class PIDSettings {
     this.KD = KD;
   }
 
-  public double getKV() {
-    return KV;
+  public double getTolerance() {
+    return tolerance;
   }
 
-  public void setKV(double KV) {
-    this.KV = KV;
-  }
-
-  public double getKA() {
-    return KA;
-  }
-
-  public void setKA(double KA) {
-    this.KA = KA;
+  public void setTolerance(double tolerance) {
+    this.tolerance = tolerance;
   }
 
   public double getDeltaTolerance() {
@@ -93,13 +67,5 @@ public class PIDSettings {
 
   public void setDeltaTolerance(double deltaTolerance) {
     this.deltaTolerance = deltaTolerance;
-  }
-
-  public double getKS() {
-    return KS;
-  }
-
-  public void setKS(double KS) {
-    this.KS = KS;
   }
 }

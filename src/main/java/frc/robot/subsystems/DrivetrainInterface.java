@@ -16,12 +16,21 @@ public interface DrivetrainInterface extends Subsystem {
     void curvatureDrive(double x, double y, boolean quickTurn);
     void tankDrive(double leftSpeed, double rightSpeed);
     
+    default void stopMove() {
+        tankDrive(0, 0);
+    }  
+    
     default void voltageTankDrive(double left, double right) {
         tankDrive(left / RobotController.getBatteryVoltage(), right / RobotController.getBatteryVoltage());
     }
     
     // Gyro functions
     double getAngle();
+    
+    default double getRadianAngle() {
+        return Math.toRadians(getAngle());
+    }
+
     void resetGyro();
     void calibrateGyro();
     
@@ -56,5 +65,9 @@ public interface DrivetrainInterface extends Subsystem {
     DifferentialDriveKinematics getKinematics();
     DifferentialDriveWheelSpeeds getWheelSpeeds();
     void resetOdometry(Pose2d pose);
-    Pose2d getPose();  
+    Pose2d getPose();
+    double getLeftBusVoltage();
+    double getRightBusVoltage();
+    double getLeftAppliedOutput();
+    double getRightAppliedOutput();
 }

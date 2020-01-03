@@ -31,7 +31,7 @@ public class TurnToTarget extends CommandBase {
     addRequirements(subsystem);
     this.target = target;
     this.output = output;
-    PIDSettings rotationSettings = robotConstants.pidConstants.visionRotationSettings;
+    PIDSettings rotationSettings = robotConstants.controlConstants.visionRotationSettings;
     rotationPIDController = new PIDController(rotationSettings.getKP(), rotationSettings.getKI(), rotationSettings.getKD());
     rotationPIDController.setTolerance(rotationSettings.getTolerance(), rotationSettings.getDeltaTolerance());
   }

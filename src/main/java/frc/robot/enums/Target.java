@@ -1,7 +1,7 @@
 package frc.robot.enums;
 
 /**
- * This class represent a potential targets that the robot
+ * This enum represent a potential targets that the robot
  * can follow using vision.
  * Each of the targets has an index representing
  * what pipeline limelight should use for finding it.
