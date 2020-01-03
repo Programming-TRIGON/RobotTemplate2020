@@ -23,8 +23,8 @@ public abstract class RobotConstants extends RobotMap {
         public PIDSettings exampleSettings;
         public PIDSettings visionRotationSettings;
         public PIDSettings visionDistanceSettings;
-
     }
+
     public static class VisionConstants {
         public double DISTANCE_CALCULATION_A_COEFFICIENT;
         public double DISTANCE_CALCULATION_B_COEFFICIENT;
