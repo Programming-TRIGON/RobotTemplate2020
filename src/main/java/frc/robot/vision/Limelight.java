@@ -93,7 +93,7 @@ public class Limelight {
    */
   public double getAngle() {
     Vector2d vector = calculateVector();
-    return Math.atan(vector.y / vector.x);
+    return Math.toDegrees(Math.atan(vector.y / vector.x));
   }
 
   /**
