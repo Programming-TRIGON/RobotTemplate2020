@@ -199,7 +199,6 @@ public class Limelight {
    * @return the vector between the middle of the robot and and the target.
    */
   private Vector2d calculateVector() {
-    //This is the offset vector.
     //This is the the vector from the limelight to the target.
     Vector2d limelightToTarget = new Vector2d(getDistanceFromLimelight(), 0);
     limelightToTarget.rotate(getTx());
