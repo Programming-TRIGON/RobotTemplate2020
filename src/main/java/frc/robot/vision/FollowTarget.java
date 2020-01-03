@@ -31,8 +31,8 @@ public class FollowTarget extends CommandBase {
     addRequirements(Robot.drivetrain);
     this.target = target;
     this.output = output;
-    PIDSettings distanceSettings = robotConstants.pidConstants.visionDistanceSettings;
-    PIDSettings rotationSettings = robotConstants.pidConstants.visionRotationSettings;
+    PIDSettings distanceSettings = robotConstants.controlConstants.visionDistanceSettings;
+    PIDSettings rotationSettings = robotConstants.controlConstants.visionRotationSettings;
     distancePIDController = new PIDController(distanceSettings.getKP(), distanceSettings.getKI(), distanceSettings.getKD());
     distancePIDController.setTolerance(distanceSettings.getTolerance(), distanceSettings.getDeltaTolerance());
     rotationPIDController = new PIDController(rotationSettings.getKP(), rotationSettings.getKI(), rotationSettings.getKD());

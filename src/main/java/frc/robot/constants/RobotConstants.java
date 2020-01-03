@@ -1,5 +1,6 @@
 package frc.robot.constants;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import frc.robot.utils.PIDSettings;
 
 /**
@@ -8,7 +9,8 @@ import frc.robot.utils.PIDSettings;
 public abstract class RobotConstants extends RobotMap {
     public DrivetrainConstants drivetrainConstants = new DrivetrainConstants(); 
     public VisionConstants visionConstants = new VisionConstants();
-    public PIDConstants pidConstants = new PIDConstants();
+    public ControlConstants controlConstants = new ControlConstants();
+    public MotionProfilingConstants motionProfilingConstants = new MotionProfilingConstants(); 
 
     // Example:
     public static class DrivetrainConstants {
@@ -19,10 +21,21 @@ public abstract class RobotConstants extends RobotMap {
         public double LEFT_ENCODER_TICKS_PER_METER;
         public double RIGHT_ENCODER_TICKS_PER_METER;
     }
-    public static class PIDConstants {
-        public PIDSettings exampleSettings;
+    
+    /** Control constants contain control value such as kp, kv for control loops */
+    public static class ControlConstants {
+        public SimpleMotorFeedforward motionProfilingSettings;
+        public SimpleMotorFeedforward motionProfilingReverseSettings;
         public PIDSettings visionRotationSettings;
         public PIDSettings visionDistanceSettings;
+    }
+
+    public static class MotionProfilingConstants {
+        public double MAX_VELOCITY;
+        public double MAX_ACCELERATION;
+        public double MAX_CENTRIPETAL_ACCELERATION;
+        public double KP;
+        public double REVERSE_KP;
     }
 
     public static class VisionConstants {
