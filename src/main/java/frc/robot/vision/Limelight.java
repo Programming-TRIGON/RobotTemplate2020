@@ -201,7 +201,7 @@ public class Limelight {
   private Vector2d calculateVector() {
     //This is the the vector from the limelight to the target.
     Vector2d limelightToTarget = new Vector2d(getDistanceFromLimelight(), 0);
-    limelightToTarget.rotate(getTx());
+    limelightToTarget.rotate(getTx() + robotConstants.visionConstants.LIMELIGHT_ANGLE_OFFSET);
     // The offset is subtracted from the limelightToTarget vector in order to get the final vector.
     return new Vector2d(limelightToTarget.x - robotConstants.visionConstants.LIMELIGHT_OFFSET_X, limelightToTarget.y - robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
   }

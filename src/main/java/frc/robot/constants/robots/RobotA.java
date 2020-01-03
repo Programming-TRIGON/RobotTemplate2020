@@ -24,6 +24,7 @@ public class RobotA extends RobotConstants {
         visionConstants.DISTANCE_CALCULATION_B_COEFFICIENT = 0;
         visionConstants.LIMELIGHT_OFFSET_X = 0;
         visionConstants.LIMELIGHT_OFFSET_Y = 0;
+        visionConstants.LIMELIGHT_ANGLE_OFFSET = 0;
         visionConstants.TARGET_NOT_FOUND_WAIT_TIME = 0.1;
 
         pidConstants.exampleSettings = new PIDSettings(0,0,0,0);
