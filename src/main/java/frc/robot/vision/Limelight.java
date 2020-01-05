@@ -72,7 +72,7 @@ public class Limelight {
   }
 
   /**
-   * @return The distance between the the target and the limelight
+   * @return The distance between the target and the limelight
    */
   //TODO: set real function
   public double getDistanceFromLimelight() {
@@ -82,7 +82,7 @@ public class Limelight {
   }
 
   /**
-   * @return The distance between the the target and the the middle of the robot
+   * @return The distance between the target and the middle of the robot
    */
   public double getDistance() {
     return calculateVector().magnitude();
@@ -93,7 +93,7 @@ public class Limelight {
    */
   public double getAngle() {
     Vector2d vector = calculateVector();
-    return Math.atan(vector.y / vector.x);
+    return Math.toDegrees(Math.atan(vector.y / vector.x));
   }
 
   /**
@@ -190,21 +190,19 @@ public class Limelight {
   /**
    * Stops the vision calculation, turns off led and change the camera to driver mode.
    */
-  public void stopVision(){
+  public void stopVision() {
     setCamMode(CamMode.driver);
     setLedMode(LedMode.off);
   }
 
   /**
-   * @return the vector between the middle of the robot and and the target.
+   * @return the vector between the middle of the robot and the target.
    */
   private Vector2d calculateVector() {
-    //This is the offset vector.
-    Vector2d middleToLimelight = new Vector2d(-robotConstants.visionConstants.LIMELIGHT_OFFSET_X, -robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
-    //This is the the vector from the limelight to the target.
-    Vector2d limelightToTarget = new Vector2d(0, getDistanceFromLimelight());
-    limelightToTarget.rotate(getTx());
+    //This is the vector from the limelight to the target.
+    Vector2d limelightToTarget = new Vector2d(getDistanceFromLimelight(), 0);
+    limelightToTarget.rotate(getTx() + robotConstants.visionConstants.LIMELIGHT_ANGLE_OFFSET);
     // The offset is subtracted from the limelightToTarget vector in order to get the final vector.
-    return new Vector2d(middleToLimelight.x + limelightToTarget.x, middleToLimelight.y + limelightToTarget.y);
+    return new Vector2d(limelightToTarget.x - robotConstants.visionConstants.LIMELIGHT_OFFSET_X, limelightToTarget.y - robotConstants.visionConstants.LIMELIGHT_OFFSET_Y);
   }
 }
