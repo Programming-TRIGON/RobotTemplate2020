@@ -9,31 +9,38 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
-import frc.robot.enums.Color;
+import frc.robot.enums.LEDColor;
 
 public class LED extends SubsystemBase {
+  private static final double BLINK_TIME = 0.5;
   private Spark ledController;
-  private Color currentColor;
+  private LEDColor currentColor;
+  private LEDColor blinkColor;
+  private LEDColor lastColorBeforeBlink;
   private Notifier notifier;
   private Random rand;
-  private final double BLINK_TIME = 0.7;
+  private int blinkingAmount;
   
   /**
    * Creates a new LED subsystem for Rev robotics Led controller and color changing.
    */
   public LED() {
     ledController = new Spark(Robot.robotConstants.pwm.LED_CONTROLLER);
-    notifier = new Notifier(() -> {});
+    //notifier = new Notifier(() -> {});
     rand = new Random();
     if(DriverStation.getInstance().getAlliance().equals(Alliance.Blue))
-      setColor(Color.Blue);
+      setColor(LEDColor.Blue);
     else
-      setColor(Color.Red);
+      setColor(LEDColor.Red);
+    blinkingAmount = -1;
+    notifier = new Notifier(this::notifierPeriodic);
+    notifier.startPeriodic(BLINK_TIME);
   }
 
-  public void setColor(Color color) {
+  public void setColor(LEDColor color) {
     setControllerPower(color.getValue());
     currentColor = color;
+    blinkingAmount = -1;
   } 
 
   public void setControllerPower(double value) {
@@ -41,11 +48,10 @@ public class LED extends SubsystemBase {
   }
 
   public void turnOffLED() {
-    currentColor = null;
-    setControllerPower(0);
+    setColor(LEDColor.Off);
   }
 
-  public Color getCurrentColor() {
+  public LEDColor getCurrentColor() {
     return currentColor;
   }
 
@@ -54,10 +60,11 @@ public class LED extends SubsystemBase {
    * @param color the color to blink
    * @param quantity the number of times to blink 
    */
-  public void blinkColor(Color color, int quantity) {
+  public void blinkColor(LEDColor color, int quantity) {
+    lastColorBeforeBlink = getCurrentColor();
     turnOffLED();
-    notifier.setHandler(() -> toggleColor(color, quantity * 2));
-    notifier.startSingle(0);
+    blinkColor = color;
+    blinkingAmount = quantity * 2;
   }
 
   /**
@@ -66,7 +73,7 @@ public class LED extends SubsystemBase {
    * @param color the color to toggle
    * @param amount the number of times to blink
    */
-  private synchronized void toggleColor(Color color, int quantity) {
+  private synchronized void toggleColor(LEDColor color, int quantity) {
     for (int i = 0; i < quantity; i++) {
       if(color == currentColor) 
         turnOffLED();
@@ -74,6 +81,26 @@ public class LED extends SubsystemBase {
         setColor(color);
       Timer.delay(BLINK_TIME);
     }
+  }
+
+  public boolean isLedOn() {
+    return ledController.get() != 0;
+  }
+
+  public void notifierPeriodic() {
+    if (blinkingAmount == 0)
+      setColor(lastColorBeforeBlink);
+    if(blinkingAmount > 0) {
+      LEDColor colorToSet;
+      if(blinkingAmount % 2 == 1)
+        colorToSet = LEDColor.Off;
+      else
+        colorToSet = blinkColor;
+      setControllerPower(colorToSet.getValue());
+      currentColor = colorToSet;
+      blinkingAmount--;
+    }
+    
   }
 
   public void setRandomPattern() {

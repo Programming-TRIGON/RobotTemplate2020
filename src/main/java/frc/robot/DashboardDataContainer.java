@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.enums.Color;
+import frc.robot.enums.LEDColor;
 import frc.robot.utils.DashboardController;
 
 /**
@@ -13,7 +13,7 @@ public class DashboardDataContainer {
     
     public DashboardDataContainer() {
         dashboardController = new DashboardController();
-        SmartDashboard.putData("LED blink", new InstantCommand(() -> Robot.led.blinkColor(Color.Black, 3)));
+        SmartDashboard.putData("LED blink", new InstantCommand(() -> Robot.led.blinkColor(LEDColor.Black, 3)));
         
         // dashboardController.addBoolean(name, booleanSupplier);
         // dashboardController.addNumber(name, numberSupplier);
