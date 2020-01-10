@@ -11,30 +11,32 @@ import frc.robot.Robot;
 import frc.robot.enums.LEDColor;
 
 public class LED extends SubsystemBase {
-  private static final double BLINK_TIME = 0.5;
+  private static final double BLINK_TIME = 0.2;
   private Spark ledController;
   private LEDColor currentColor;
   private LEDColor blinkColor;
   private LEDColor lastColorBeforeBlink;
+  private int blinkingAmount;
   private Notifier notifier;
   private Random rand;
-  private int blinkingAmount;
   
   /**
    * Creates a new LED subsystem for Rev robotics Led controller and color changing.
    */
   public LED() {
     ledController = new Spark(Robot.robotConstants.pwm.LED_CONTROLLER);
-    rand = new Random();
+    currentColor = LEDColor.Off;
     blinkingAmount = -1;
     notifier = new Notifier(this::notifierPeriodic);
+    rand = new Random();
+
     notifier.startPeriodic(BLINK_TIME);
   }
 
   public void setColor(LEDColor color) {
-    setControllerPower(color.getValue());
     currentColor = color;
     blinkingAmount = -1;
+    setControllerPower(color.getValue());
   } 
 
   public void setControllerPower(double value) {
@@ -88,6 +90,8 @@ public class LED extends SubsystemBase {
   }
 
   public void setRandomPattern() {
+    currentColor = LEDColor.Random;
+    blinkingAmount = -1;
     setControllerPower(getRandomPattern());
   }
 

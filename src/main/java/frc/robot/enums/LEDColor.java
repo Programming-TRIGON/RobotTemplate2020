@@ -14,6 +14,7 @@ public enum LEDColor {
     Blue(0.87),
     White(0.93),
     Black(0.99),
+    Random(0),
     Off(0);
 
     private final double value;

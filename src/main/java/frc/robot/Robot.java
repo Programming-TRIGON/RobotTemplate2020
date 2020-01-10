@@ -28,11 +28,12 @@ public class Robot extends TimedRobot {
     robotConstants = new RobotA();
     fieldConstants = new HomeField();
 
-    dashboardDataContainer = new DashboardDataContainer();
-    limelight = new Limelight();
-
     // Subsystems:
     led = new LED();
+
+    // Utils:
+    dashboardDataContainer = new DashboardDataContainer();
+    limelight = new Limelight();
 
     autoChooser = new SendableChooser<>();
     // autoChooser.setDefaultOption(name, object);
