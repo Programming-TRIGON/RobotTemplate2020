@@ -1,4 +1,4 @@
-package frc.robot.enums;
+package frc.robot.subsystems.LED;
 
 /**
  * Color enum for the LED class. 

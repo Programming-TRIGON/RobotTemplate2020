@@ -1,4 +1,4 @@
-package frc.robot.enums;
+package frc.robot.vision;
 
 /**
  * This enum has two states - send images to driver and calculate the vision.
