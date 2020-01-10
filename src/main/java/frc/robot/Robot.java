@@ -10,6 +10,7 @@ import frc.robot.constants.field_constants.HomeField;
 import frc.robot.constants.robots.RobotA;
 import frc.robot.vision.Limelight;
 import frc.robot.subsystems.DrivetrainInterface;
+import frc.robot.subsystems.LED;
 
 public class Robot extends TimedRobot {
   private Command autoCommand;
@@ -20,14 +21,20 @@ public class Robot extends TimedRobot {
   public static FieldConstants fieldConstants;
   public static Limelight limelight;
   public static DrivetrainInterface drivetrain; // TODO: Change interface to subsystem
+  public static LED led;
 
   @Override
   public void robotInit() {
     robotConstants = new RobotA();
     fieldConstants = new HomeField();
 
+    // Subsystems:
+    led = new LED();
+
+    // Utils:
     dashboardDataContainer = new DashboardDataContainer();
     limelight = new Limelight();
+
     autoChooser = new SendableChooser<>();
     // autoChooser.setDefaultOption(name, object);
     // autoChooser.addOption(name, object);

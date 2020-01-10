@@ -7,22 +7,28 @@ package frc.robot.constants;
  * floating around.
  */
 public abstract class RobotMap {
-    public CAN can = new CAN();
-    public PCM pcm = new PCM();
-    public DIO dio = new DIO();
-    
-    // TODO: Set variables for hardware components
+  public CAN can = new CAN();
+  public PCM pcm = new PCM();
+  public DIO dio = new DIO();
+  public PWM pwm = new PWM(); 
+
+  // TODO: Set variables for hardware components
   
-    public static class CAN {
+  public static class CAN {
       
-    }
-    
-    public static class PCM {
-      
-    }
-  
-    public static class DIO {
-      
-    }
   }
+    
+  public static class PCM {
+      
+  }
+  
+  public static class DIO {
+      
+  }
+
+  public static class PWM {
+    public int LED_CONTROLLER;
+    
+  }
+}
   

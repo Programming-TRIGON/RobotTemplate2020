@@ -10,6 +10,7 @@ public class DashboardDataContainer {
     
     public DashboardDataContainer() {
         dashboardController = new DashboardController();
+
         // dashboardController.addBoolean(name, booleanSupplier);
         // dashboardController.addNumber(name, numberSupplier);
         // dashboardController.addString(name, stringSupplier);

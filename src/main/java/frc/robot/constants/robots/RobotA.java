@@ -42,6 +42,7 @@ public class RobotA extends RobotConstants {
         controlConstants.visionRotationSettings = new PIDSettings(0,0,0,0,0);
 
         /* Robot Map */
+        pwm.LED_CONTROLLER = 0;
 
     }
 }
