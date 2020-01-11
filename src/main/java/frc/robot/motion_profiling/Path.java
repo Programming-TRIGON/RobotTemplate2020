@@ -1,12 +1,15 @@
 package frc.robot.motion_profiling;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -65,7 +68,18 @@ public class Path {
         this.reversed = reversed;
         this.startVelocity = startVelocity;
         this.endVelocity = endVelocity;
-
+        List<Pose2d> poses = Arrays.asList(waypoints);
+        String fileName = Filesystem.getOperatingDirectory() +
+                "/cachedPaths/" + generateHash(poses.toString());
+        File pathFile = new File(fileName);
+        if(pathFile.exists() && !pathFile.isDirectory()){
+            try {
+                trajectory = loadTrajectoryFromFile(fileName);
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         TrajectoryConfig config = new TrajectoryConfig(robotConstants.motionProfilingConstants.MAX_VELOCITY, robotConstants.motionProfilingConstants.MAX_ACCELERATION)
                 .addConstraint(new CentripetalAccelerationConstraint(robotConstants.motionProfilingConstants.MAX_CENTRIPETAL_ACCELERATION))
                 .setKinematics(Robot.drivetrain.getKinematics())
@@ -73,18 +87,24 @@ public class Path {
                 .setStartVelocity(startVelocity)
                 .setEndVelocity(endVelocity);
 
-        trajectory = TrajectoryGenerator.generateTrajectory(Arrays.asList(waypoints), config);
+        trajectory = TrajectoryGenerator.generateTrajectory(poses, config);
+        try {
+            TrajectoryUtil.toPathweaverJson(trajectory, Paths.get(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * @param pathName the name of the path to load from the filesystem.
      */
     public Path(String pathName) {
-        var path = Paths.get(Filesystem.getDeployDirectory() + "/paths/" + pathName);
+            String pathToTrajectory = Filesystem.getDeployDirectory() +
+                    "/paths/" + pathName;
         try {
-            trajectory = TrajectoryUtil.fromPathweaverJson(path);
+            trajectory = loadTrajectoryFromFile(pathToTrajectory);
         } catch (IOException e) {
-            System.err.println("could not load path from: " + path.toString()
+            System.err.println("could not load path from: " + pathToTrajectory
                     + " initializing with empty path instead of loading");
             trajectory =  new Trajectory(Arrays.asList(new Trajectory.State()));
         }
@@ -112,5 +132,38 @@ public class Path {
      */
     public double getPathTime() {
         return trajectory.getTotalTimeSeconds();
+    }
+
+    private Trajectory loadTrajectoryFromFile(String pathToTrajectory) throws IOException {
+        var path = Paths.get(pathToTrajectory);
+        return TrajectoryUtil.fromPathweaverJson(path);
+    }
+    /**
+     * Takes a string and returns its hash.
+     * This function was stolen from bumbleB 3339
+     * @param toHash a string to be hashed using
+     * @return hashed string by protocol SHA-256
+     */
+    private static String generateHash(String toHash){
+            String hash = "";
+            try {
+                byte[] encodedHash = MessageDigest.getInstance("SHA-256").digest(toHash.getBytes());
+                hash = bytesToHexString(encodedHash);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            return hash;
+    }
+
+    //taken from bumbleB
+    private static String bytesToHexString(byte[] byteArray) {
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : byteArray) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1)
+                hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }
