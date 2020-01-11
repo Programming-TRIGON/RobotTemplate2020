@@ -1,9 +1,16 @@
 package frc.robot.motion_profiling;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import frc.robot.Robot;
 
@@ -14,7 +21,6 @@ import static frc.robot.Robot.robotConstants;
  */
 public class Path {
     private Trajectory trajectory;
-    private final TrajectoryConfig config;
     private boolean reversed;
     private double startVelocity;
     private double endVelocity;
@@ -59,15 +65,29 @@ public class Path {
         this.reversed = reversed;
         this.startVelocity = startVelocity;
         this.endVelocity = endVelocity;
-        
-        config = new TrajectoryConfig(robotConstants.motionProfilingConstants.MAX_VELOCITY, robotConstants.motionProfilingConstants.MAX_ACCELERATION)
-            .addConstraint(new CentripetalAccelerationConstraint(robotConstants.motionProfilingConstants.MAX_CENTRIPETAL_ACCELERATION))
-            .setKinematics(Robot.drivetrain.getKinematics())
-            .setReversed(reversed)
-            .setStartVelocity(startVelocity)
-            .setEndVelocity(endVelocity);
 
-        trajectory = TrajectoryGenerator.generateTrajectory(Arrays.asList(waypoints), config); 
+        TrajectoryConfig config = new TrajectoryConfig(robotConstants.motionProfilingConstants.MAX_VELOCITY, robotConstants.motionProfilingConstants.MAX_ACCELERATION)
+                .addConstraint(new CentripetalAccelerationConstraint(robotConstants.motionProfilingConstants.MAX_CENTRIPETAL_ACCELERATION))
+                .setKinematics(Robot.drivetrain.getKinematics())
+                .setReversed(reversed)
+                .setStartVelocity(startVelocity)
+                .setEndVelocity(endVelocity);
+
+        trajectory = TrajectoryGenerator.generateTrajectory(Arrays.asList(waypoints), config);
+    }
+
+    /**
+     * @param pathName the name of the path to load from the filesystem.
+     */
+    public Path(String pathName) {
+        var path = Paths.get(Filesystem.getDeployDirectory() + "/paths/" + pathName);
+        try {
+            trajectory = TrajectoryUtil.fromPathweaverJson(path);
+        } catch (IOException e) {
+            System.err.println("could not load path from: " + path.toString()
+                    + " initializing with empty path instead of loading");
+            trajectory =  new Trajectory(Arrays.asList(new Trajectory.State()));
+        }
     }
 
     public Trajectory getTrajectory() {
