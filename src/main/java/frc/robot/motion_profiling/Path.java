@@ -3,6 +3,7 @@ package frc.robot.motion_profiling;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -83,7 +84,7 @@ public class Path {
         } catch (IOException e) {
             System.err.println("could not load path from: " + (path.toString())
                     + " initializing with empty path instead of loading");
-            trajectory =  new Trajectory(Arrays.asList(new Trajectory.State()));
+            trajectory =  new Trajectory(List.of(new Trajectory.State()));
         }
     }
 
