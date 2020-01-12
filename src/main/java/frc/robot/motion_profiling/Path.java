@@ -20,8 +20,6 @@ import static frc.robot.Robot.robotConstants;
 public class Path {
     private Trajectory trajectory;
     private boolean reversed;
-    private double startVelocity;
-    private double endVelocity;
     private static final double DEFAULT_START_PATH_VELOCITY = 0.0;
     private static final double DEFAULT_END_PATH_VELOCITY = 0.0;
 
@@ -61,8 +59,6 @@ public class Path {
      */
     public Path(boolean reversed, double startVelocity, double endVelocity, Waypoint... waypoints) {
         this.reversed = reversed;
-        this.startVelocity = startVelocity;
-        this.endVelocity = endVelocity;
         TrajectoryConfig config = new TrajectoryConfig(robotConstants.motionProfilingConstants.MAX_VELOCITY, robotConstants.motionProfilingConstants.MAX_ACCELERATION)
                 .addConstraint(new CentripetalAccelerationConstraint(robotConstants.motionProfilingConstants.MAX_CENTRIPETAL_ACCELERATION))
                 .setKinematics(Robot.drivetrain.getKinematics())
@@ -90,14 +86,6 @@ public class Path {
 
     public Trajectory getTrajectory() {
         return trajectory;
-    }
-
-    public double getStartVelocity() {
-        return startVelocity;
-    }
-
-    public double getEndVelocity() {
-        return endVelocity;
     }
 
     public boolean isReversed() {
