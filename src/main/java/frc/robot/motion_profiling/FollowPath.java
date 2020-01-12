@@ -60,8 +60,8 @@ public class FollowPath extends CommandBase {
       drivetrain::getWheelSpeeds,
       leftController,
       rightController,
-      drivetrain::voltageTankDrive,                         
-      drivetrain);
+      drivetrain::voltageTankDrive);
+    addRequirements(drivetrain);
   }
 
   @Override
