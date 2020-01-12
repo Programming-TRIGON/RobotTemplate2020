@@ -1,4 +1,4 @@
-package frc.robot.enums;
+package frc.robot.vision;
 
 /**
  * This enum represent a potential targets that the robot
