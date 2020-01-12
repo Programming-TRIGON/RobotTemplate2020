@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -8,6 +9,7 @@ import frc.robot.constants.FieldConstants;
 import frc.robot.constants.RobotConstants;
 import frc.robot.constants.field_constants.HomeField;
 import frc.robot.constants.robots.RobotA;
+import frc.robot.enums.AutoPath;
 import frc.robot.vision.Limelight;
 import frc.robot.subsystems.DrivetrainInterface;
 import frc.robot.subsystems.LED;
@@ -36,6 +38,8 @@ public class Robot extends TimedRobot {
     limelight = new Limelight();
 
     autoChooser = new SendableChooser<>();
+    System.out.println(Filesystem.getDeployDirectory());
+    System.out.println(AutoPath.ExamplePathFromFile.getPath().getTrajectory());
     // autoChooser.setDefaultOption(name, object);
     // autoChooser.addOption(name, object);
   }
