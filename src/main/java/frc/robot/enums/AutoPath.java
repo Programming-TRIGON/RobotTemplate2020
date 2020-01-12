@@ -14,6 +14,7 @@ public enum AutoPath {
     ExampleReversePath(new Path(true, new Waypoint(0,0,0), new Waypoint(3,2,90))),
     ExamplePathFromFile;
 
+
     private final Path path;
 
     AutoPath(Path path) {

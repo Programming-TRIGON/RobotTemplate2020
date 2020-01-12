@@ -2,8 +2,6 @@ package frc.robot.motion_profiling;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -78,12 +76,12 @@ public class Path {
      * @param pathName the name of the path to load from the filesystem.
      */
     public Path(String pathName) {
-            String pathToTrajectory = Filesystem.getDeployDirectory() +
-                    "/paths/" + pathName;
+        var path = Paths.get(Filesystem.getDeployDirectory() +
+                "/paths/" + pathName);
         try {
-            trajectory = loadTrajectoryFromFile(pathToTrajectory);
+            trajectory = TrajectoryUtil.fromPathweaverJson(path);
         } catch (IOException e) {
-            System.err.println("could not load path from: " + pathToTrajectory
+            System.err.println("could not load path from: " + (path.toString())
                     + " initializing with empty path instead of loading");
             trajectory =  new Trajectory(Arrays.asList(new Trajectory.State()));
         }
@@ -111,38 +109,5 @@ public class Path {
      */
     public double getPathTime() {
         return trajectory.getTotalTimeSeconds();
-    }
-
-    private Trajectory loadTrajectoryFromFile(String pathToTrajectory) throws IOException {
-        var path = Paths.get(pathToTrajectory);
-        return TrajectoryUtil.fromPathweaverJson(path);
-    }
-    /**
-     * Takes a string and returns its hash.
-     * This function was stolen from bumbleB 3339
-     * @param toHash a string to be hashed using
-     * @return hashed string by protocol SHA-256
-     */
-    private static String generateHash(String toHash){
-            String hash = "";
-            try {
-                byte[] encodedHash = MessageDigest.getInstance("SHA-256").digest(toHash.getBytes());
-                hash = bytesToHexString(encodedHash);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-            return hash;
-    }
-
-    //taken from bumbleB
-    private static String bytesToHexString(byte[] byteArray) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : byteArray) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1)
-                hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
     }
 }
