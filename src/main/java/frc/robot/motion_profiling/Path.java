@@ -82,7 +82,7 @@ public class Path {
         try {
             trajectory = TrajectoryUtil.fromPathweaverJson(path);
         } catch (IOException e) {
-            System.err.println("could not load path from: " + (path.toString())
+            System.err.println("could not load path from: " + path.toString()
                     + " initializing with empty path instead of loading");
             trajectory =  new Trajectory(List.of(new Trajectory.State()));
         }
