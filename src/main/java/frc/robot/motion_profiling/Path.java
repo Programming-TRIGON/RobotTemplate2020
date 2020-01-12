@@ -1,15 +1,11 @@
 package frc.robot.motion_profiling;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -68,18 +64,6 @@ public class Path {
         this.reversed = reversed;
         this.startVelocity = startVelocity;
         this.endVelocity = endVelocity;
-        List<Pose2d> poses = Arrays.asList(waypoints);
-        String fileName = Filesystem.getOperatingDirectory() +
-                "/cachedPaths/" + generateHash(poses.toString());
-        File pathFile = new File(fileName);
-        if(pathFile.exists() && !pathFile.isDirectory()){
-            try {
-                trajectory = loadTrajectoryFromFile(fileName);
-                return;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         TrajectoryConfig config = new TrajectoryConfig(robotConstants.motionProfilingConstants.MAX_VELOCITY, robotConstants.motionProfilingConstants.MAX_ACCELERATION)
                 .addConstraint(new CentripetalAccelerationConstraint(robotConstants.motionProfilingConstants.MAX_CENTRIPETAL_ACCELERATION))
                 .setKinematics(Robot.drivetrain.getKinematics())
@@ -87,12 +71,7 @@ public class Path {
                 .setStartVelocity(startVelocity)
                 .setEndVelocity(endVelocity);
 
-        trajectory = TrajectoryGenerator.generateTrajectory(poses, config);
-        try {
-            TrajectoryUtil.toPathweaverJson(trajectory, Paths.get(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        trajectory = TrajectoryGenerator.generateTrajectory(Arrays.asList(waypoints), config);
     }
 
     /**
