@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.Robot;
-import frc.robot.subsystems.TrigonSubsystem;
+import frc.robot.subsystems.MoveableSubsystem;
 
 /**
  * Must have functions (interface) in Drivetrain subsystem
  */
-public interface DrivetrainInterface extends TrigonSubsystem {
+public interface DrivetrainInterface extends MoveableSubsystem {
     // Drive functions
     void arcadeDrive(double x, double y);
     void curvatureDrive(double x, double y, boolean quickTurn);
