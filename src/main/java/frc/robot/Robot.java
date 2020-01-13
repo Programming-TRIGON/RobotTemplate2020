@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.FieldConstants;
 import frc.robot.constants.RobotConstants;
-import frc.robot.constants.field_constants.HomeField;
+import frc.robot.constants.fields.HomeField;
 import frc.robot.constants.robots.RobotA;
 import frc.robot.vision.Limelight;
 import frc.robot.subsystems.drivetrain.DrivetrainInterface;
