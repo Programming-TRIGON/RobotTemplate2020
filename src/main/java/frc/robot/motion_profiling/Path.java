@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
 import frc.robot.Robot;
+import frc.robot.utils.DriverStationLogger;
 
 import static frc.robot.Robot.robotConstants;
 
@@ -78,7 +79,7 @@ public class Path {
         try {
             trajectory = TrajectoryUtil.fromPathweaverJson(path);
         } catch (IOException e) {
-            System.err.println("Could not load " + pathName + " path from: " + path.toString()
+            DriverStationLogger.logErrorToDS("Could not load " + pathName + " path from: " + path.toString()
                     + "\nInitializing with an empty path");        
             trajectory = new Trajectory(List.of(new Trajectory.State()));
         }
