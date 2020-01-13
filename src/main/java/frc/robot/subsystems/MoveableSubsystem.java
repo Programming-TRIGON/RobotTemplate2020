@@ -15,5 +15,5 @@ public interface MoveableSubsystem extends Subsystem {
     public void moveWithXbox(double y);
     public void moveWithXbox(double x, double y);
 
-    public void stop();
+    public void stopMove();
 }
