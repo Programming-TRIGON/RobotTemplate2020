@@ -1,4 +1,4 @@
-package frc.robot.enums;
+package frc.robot.motion_profiling;
 
 import frc.robot.motion_profiling.Path;
 import frc.robot.motion_profiling.Waypoint;

@@ -4,9 +4,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import frc.robot.enums.CamMode;
-import frc.robot.enums.LedMode;
-import frc.robot.enums.Target;
+import frc.robot.vision.CamMode;
+import frc.robot.vision.LedMode;
+import frc.robot.vision.Target;
 
 import static frc.robot.Robot.robotConstants;
 

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.enums.AutoPath;
+import frc.robot.motion_profiling.AutoPath;
 
 import static frc.robot.Robot.drivetrain;
 import static frc.robot.Robot.robotConstants;
@@ -60,8 +60,8 @@ public class FollowPath extends CommandBase {
       drivetrain::getWheelSpeeds,
       leftController,
       rightController,
-      drivetrain::voltageTankDrive,                         
-      drivetrain);
+      drivetrain::voltageTankDrive);
+    addRequirements(drivetrain);
   }
 
   @Override
