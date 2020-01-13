@@ -1,4 +1,4 @@
-package frc.robot.constants.field_constants;
+package frc.robot.constants.fields;
 
 import frc.robot.constants.FieldConstants;
 
