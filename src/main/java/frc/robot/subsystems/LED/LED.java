@@ -100,9 +100,11 @@ public class LED extends SubsystemBase {
    */
   private double getRandomPattern() { 
     double rand = 0.1 * this.rand.nextInt(10);
-    if(rand==0.0)
-      return rand + 0.01 * (randomOddNumber()); 
-    return rand + 0.01 * (randomOddNumber());
+    int odd = randomOddNumber();
+    while(odd<5 && rand==0.0) {
+      odd = randomOddNumber();
+    }
+    return -(rand + odd * 0.01);  
   }
 
   /**
