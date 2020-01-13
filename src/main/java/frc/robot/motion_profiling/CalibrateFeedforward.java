@@ -71,7 +71,7 @@ public class CalibrateFeedforward extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    drivetrain.stopMove();
+    drivetrain.stop();
   }
 
   @Override

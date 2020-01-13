@@ -4,21 +4,17 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
+import frc.robot.subsystems.TrigonSubsystem;
 
 /**
  * Must have functions (interface) in Drivetrain subsystem
  */
-public interface DrivetrainInterface extends Subsystem {
+public interface DrivetrainInterface extends TrigonSubsystem {
     // Drive functions
     void arcadeDrive(double x, double y);
     void curvatureDrive(double x, double y, boolean quickTurn);
     void tankDrive(double leftSpeed, double rightSpeed);
-    
-    default void stopMove() {
-        tankDrive(0, 0);
-    }  
     
     default void voltageTankDrive(double left, double right) {
         tankDrive(left / RobotController.getBatteryVoltage(), right / RobotController.getBatteryVoltage());
