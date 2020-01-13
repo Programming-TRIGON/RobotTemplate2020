@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.vision.Target;
+import frc.robot.subsystems.MoveableSubsystem;
 import frc.robot.utils.PIDSettings;
 import java.util.function.DoubleConsumer;
 
@@ -27,10 +27,10 @@ public class TurnToTarget extends CommandBase {
    * @param output    accepts rotation output.
    * @param subsystem the subsystem to require
    */
-  public TurnToTarget(Target target, DoubleConsumer output, Subsystem subsystem) {
+  public TurnToTarget(Target target, MoveableSubsystem subsystem) {
     addRequirements(subsystem);
     this.target = target;
-    this.output = output;
+    output = subsystem::moveWithVision;
     PIDSettings rotationSettings = robotConstants.controlConstants.visionRotationSettings;
     rotationPIDController = new PIDController(rotationSettings.getKP(), rotationSettings.getKI(), rotationSettings.getKD());
     rotationPIDController.setTolerance(rotationSettings.getTolerance(), rotationSettings.getDeltaTolerance());
