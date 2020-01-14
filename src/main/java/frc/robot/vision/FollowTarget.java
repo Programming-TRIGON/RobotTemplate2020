@@ -40,9 +40,10 @@ public class FollowTarget extends CommandBase {
   public void initialize() {
     distancePIDController.reset();
     rotationPIDController.reset();
-
+    distancePIDController.setSetpoint(target.getDistance());
+    rotationPIDController.setSetpoint(0);
     lastTimeSeenTarget = Timer.getFPGATimestamp();
-    // Configure the limelight to start computing.
+    // Configure the limelight to start computing vision.
     limelight.startVision(target);
   }
 
