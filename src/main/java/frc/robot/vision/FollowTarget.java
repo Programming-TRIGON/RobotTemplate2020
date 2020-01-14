@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.vision.Target;
 import frc.robot.utils.PIDSettings;
-import java.util.function.BiConsumer;
 
 import static frc.robot.Robot.limelight;
 import static frc.robot.Robot.robotConstants;
@@ -18,7 +17,6 @@ import static frc.robot.Robot.robotConstants;
  */
 public class FollowTarget extends CommandBase {
   private Target target;
-  private BiConsumer<Double, Double> output;
   private PIDController rotationPIDController;
   private PIDController distancePIDController;
   private double lastTimeSeenTarget;
@@ -27,10 +25,9 @@ public class FollowTarget extends CommandBase {
    * @param target The target the robot will follow
    * @param output accepts rotation output and distance output.
    */
-  public FollowTarget(Target target, BiConsumer<Double, Double> output) {
+  public FollowTarget(Target target) {
     addRequirements(Robot.drivetrain);
     this.target = target;
-    this.output = output;
     PIDSettings distanceSettings = robotConstants.controlConstants.visionDistanceSettings;
     PIDSettings rotationSettings = robotConstants.controlConstants.visionRotationSettings;
     distancePIDController = new PIDController(distanceSettings.getKP(), distanceSettings.getKI(), distanceSettings.getKD());
@@ -43,9 +40,10 @@ public class FollowTarget extends CommandBase {
   public void initialize() {
     distancePIDController.reset();
     rotationPIDController.reset();
-
+    distancePIDController.setSetpoint(target.getDistance());
+    rotationPIDController.setSetpoint(0);
     lastTimeSeenTarget = Timer.getFPGATimestamp();
-    // Configure the limelight to start computing.
+    // Configure the limelight to start computing vision.
     limelight.startVision(target);
   }
 
@@ -54,11 +52,11 @@ public class FollowTarget extends CommandBase {
     if (limelight.getTv()) {
       double distanceOutput = distancePIDController.calculate(limelight.getDistance());
       double rotationOutput = rotationPIDController.calculate(limelight.getAngle());
-      output.accept(rotationOutput, distanceOutput);
+      Robot.drivetrain.arcadeDrive(rotationOutput, distanceOutput);
       lastTimeSeenTarget = Timer.getFPGATimestamp();
     } else
       // The target wasn't found
-      output.accept(0.0, 0.0);
+      Robot.drivetrain.stopMove();
   }
 
   @Override
@@ -69,7 +67,7 @@ public class FollowTarget extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    output.accept(0.0, 0.0);
+    Robot.drivetrain.stopMove();
     limelight.stopVision();
   }
 

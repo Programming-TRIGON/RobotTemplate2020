@@ -30,7 +30,7 @@ public class TurnToTarget extends CommandBase {
   public TurnToTarget(Target target, MoveableSubsystem subsystem) {
     addRequirements(subsystem);
     this.target = target;
-    output = subsystem::moveWithVision;
+    output = subsystem::move;
     PIDSettings rotationSettings = robotConstants.controlConstants.visionRotationSettings;
     rotationPIDController = new PIDController(rotationSettings.getKP(), rotationSettings.getKI(), rotationSettings.getKD());
     rotationPIDController.setTolerance(rotationSettings.getTolerance(), rotationSettings.getDeltaTolerance());
@@ -39,6 +39,7 @@ public class TurnToTarget extends CommandBase {
   @Override
   public void initialize() {
     rotationPIDController.reset();
+    rotationPIDController.setSetpoint(0);
     lastTimeSeenTarget = Timer.getFPGATimestamp();
     // Configure the limelight to start computing vision.
     limelight.startVision(target);
