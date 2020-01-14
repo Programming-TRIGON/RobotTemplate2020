@@ -4,7 +4,7 @@ package frc.robot.utils;
  * Driver station logger is class for loging to the DS.
  * Logs can be found in the driver station log file viewer, at the Event List label.
  *    
- * @see https://docs.wpilib.org/en/latest/docs/software/driverstation/driver-station-log-viewer.html    
+ * @see <a href=https://docs.wpilib.org/en/latest/docs/software/driverstation/driver-station-log-viewer.html>Driver Station Log File Viewer</a>
  */
 public class DriverStationLogger {
     
