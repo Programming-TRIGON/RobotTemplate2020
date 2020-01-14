@@ -1,4 +1,4 @@
-package frc.robot.utils;
+package frc.robot.components;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * This class attaches booleans values to the enum values from wpilibs double
  * solenoid class
  */
-public class TrigonDoubleSolenoid extends DoubleSolenoid {
-    public TrigonDoubleSolenoid(final int forwardChannel, final int reverseChannel) {
+public class TrigonSolenoid extends DoubleSolenoid {
+    public TrigonSolenoid(final int forwardChannel, final int reverseChannel) {
         super(forwardChannel, reverseChannel);
     }
 
