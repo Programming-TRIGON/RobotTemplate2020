@@ -6,7 +6,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
- * this class extends the PigeonIMU class for convenient API that implements Gyro.
+ * This class extends the PigeonIMU class for convenient API that implements Gyro.
  */
 public class Pigeon extends PigeonIMU implements Gyro {
   private double[] yawPitchRoll;
