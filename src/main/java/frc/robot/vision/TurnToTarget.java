@@ -15,7 +15,7 @@ import static frc.robot.Robot.robotConstants;
  * It will be probably changed according the game and the robot.
  */
 public class TurnToTarget extends CommandBase {
-  private final MoveableSubsystem subsystem;
+  private MoveableSubsystem subsystem;
   private Target target;
   private PIDController rotationPIDController;
   private double lastTimeSeenTarget;
