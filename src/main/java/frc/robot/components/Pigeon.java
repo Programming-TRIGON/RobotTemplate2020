@@ -27,11 +27,6 @@ public class Pigeon extends PigeonIMU implements Gyro {
     generalStatus = new GeneralStatus();
   }
 
-  public double getYaw() {
-    getYawPitchRoll(yawPitchRoll);
-    return yawPitchRoll[0];
-  }
-
   /**
    * @return whether the gyro finished calibrating and is ready to use
    */
@@ -53,7 +48,18 @@ public class Pigeon extends PigeonIMU implements Gyro {
 
   @Override
   public double getAngle() {
-    return getYaw();
+    getYawPitchRoll(yawPitchRoll);
+    return yawPitchRoll[0];
+  }
+
+  public double getPitch() {
+    getYawPitchRoll(yawPitchRoll);
+    return yawPitchRoll[1];
+  }
+
+  public double getRoll() {
+    getYawPitchRoll(yawPitchRoll);
+    return yawPitchRoll[2];
   }
 
   @Override
