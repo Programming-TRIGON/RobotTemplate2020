@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.utils;
 
 import frc.robot.utils.DashboardController;
 
